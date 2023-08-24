@@ -1,0 +1,411 @@
+{% load static %} 
+<!doctype html>
+
+
+	<head>
+<link rel="icon" type="image/x-icon" href="{% static 'user/assets/img/portfolio/uvalogo.jpg' %}" />
+<title> Search </title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+	<style>
+
+    .card {
+    padding-top: 50px;
+    margin-top: 30px;
+    background-color: rgba(214, 224, 226, 0.9);
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+.card .card-heading {
+    padding: 0 20px;
+    margin: 0;
+	}
+
+.card .card-heading.simple {
+    font-size: 20px;
+    font-weight: 300;
+    color: #777;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.card .card-heading.image img {
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    margin-right: 15px;
+    vertical-align: top;
+    border: 0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.card .card-heading.image .card-heading-header {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card .card-heading.image .card-heading-header h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: #262626;
+}
+
+.card .card-heading.image .card-heading-header span {
+    font-size: 12px;
+    color: #999999;
+}
+
+.card .card-body {
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.card .card-media {
+    padding: 0 20px;
+    margin: 0 -14px;
+}
+
+.card .card-media img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card .card-actions {
+    min-height: 30px;
+    padding: 0 20px 20px 20px;
+    margin: 20px 0 0 0;
+}
+
+.card .card-comments {
+    padding: 20px;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.card .card-comments .comments-collapse-toggle {
+    padding: 0;
+    margin: 0 20px 12px 20px;
+}
+
+.card .card-comments .comments-collapse-toggle a,
+.card .card-comments .comments-collapse-toggle span {
+    padding-right: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-comments .media-heading {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card.people {
+    position: relative;
+    display: inline-block;
+    width: 170px;
+    height: 300px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.card.people:first-child {
+    margin-left: 0;
+}
+
+.card.people .card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 170px;
+    height: 150px;
+    background-color: #ffffff;
+}
+
+.card.people .card-top.green {
+    background-color: #53a93f;
+}
+
+.card.people .card-top.blue {
+    background-color: #427fed;
+}
+
+.card.people .card-info {
+    position: absolute;
+    top: 150px;
+    display: inline-block;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.people .card-info .title {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #404040;
+}
+
+.card.people .card-info .desc {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 18px;
+    line-height: 16px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.hovercard {
+    position: static;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #def3ff;
+    margin-left: auto;
+    margin-right: auto;
+    height: 70%;
+    width: 70%;
+}
+
+.card.hovercard .cardheader {
+    background: url("https://wallpaperaccess.com/full/1372684.jpg");
+    background-size: cover;
+    height: 200px;
+}
+
+.card.hovercard .avatar {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.card.hovercard .avatar img {
+    width: 150px;
+    height: 150px;
+    max-width: 200px;
+    max-height: 200px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+.card.hovercard .info {
+    padding: 4px 8px 10px;
+
+}
+
+.card.hovercard .info .title {
+    overflow: hidden;
+    margin-bottom: 4px;
+    font-size: 36px;
+    line-height: 1;
+    color: black;
+    vertical-align: middle;
+}
+
+.card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 22px;
+    line-height: 40px;
+    color: black;
+    text-overflow: ellipsis;
+    border-bottom: double #c3d4de;
+    }
+
+.card.hovercard .bottom {
+    margin-bottom: 17px;
+}
+
+.btn{ border-radius: 50%; width:62px; height:62px; line-height:50px; vertical-align: middle;}
+
+
+	</style>
+
+	</head>
+
+	<body style="background-color:#FFA600">
+
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+{% if profile %}
+
+    <form action="{% url 'user:action' %}" method="post">
+        {% csrf_token %}
+
+
+
+<div class="container">
+
+				<a style="color: black;text-align: left" class="link" href="{% url 'user:main' %}" color: green>
+                                               		 <td><i class="fa fa-home"></i> Home</td>
+                                         		 </a>
+
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+
+                </div>
+                <div class="avatar">
+                    {% if profile.profile_image %}
+					<img class = "profile_image" src = "{{ profile.profile_image.url }}" width="160">
+				    {% else %}
+				    <img class="rounded-circle mt-7" src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" width="160">
+				    {% endif %}
+                </div>
+                <div class="info">
+                    <div class="title">
+		 
+                        <p target="_blank" href="" style="color:black">{{ profile.name_text }}</p>
+		 
+                    </div>
+
+		{% if profile.age %}
+                    <div class="desc">Age: {{ profile.age}}</div>
+		{% endif %}
+
+		{% if profile.grad_year %}
+                    <div class="desc">Graduation year: {{ profile.grad_year}}</div>
+		{% endif %}
+
+		{% if profile.budget_lower and profile.budget_upper %}
+                    <div class="desc">Budget Range: ${{ profile.budget_lower}} - ${{ profile.budget_upper}}</div>
+		{% elif profile.budget_lower %}
+	    <div class="desc">Budget Minimum: ${{ profile.budget_lower}}</div>
+		{% elif profile.budget_upper %}
+ 	    <div class="desc">Budget Maximum: ${{ profile.budget_upper}}</div>
+		{% endif %}
+
+ 		{% if profile.noise_level %}
+	    <div class="desc">Noise level(out of 10): {{ profile.noise_level}}</div>
+		{% endif %}
+
+		{% if profile.gender %}
+	    <div class="desc">Gender identity: {{ profile.gender}}</div>
+		{% endif %}
+
+		{% if profile.personality %}
+	    <div class="desc">Personality: {{ profile.personality}}</div>
+		{% endif %}
+
+		{% if profile.location %}
+            	    <div class="desc">Location preferences: {{ profile.location}}</div>
+           		 {% endif %}
+
+            		{% if profile.car %}
+            	    <div class="desc">Car status: {{ profile.car}}</div>
+          		  {% endif %}
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+                </div>
+                <div class="bottom">
+
+	<input type="hidden" name="username" value="{{profile.username}}" />
+
+
+	<button name="action" type="submit" value="Left" a class="btn btn-danger btn-lg" rel="publisher">
+            	<i class="fa fa-times fa-2x" style="color:black"></i>
+        	</button>
+
+	<button name="action" type="submit" value="Right" a class="btn btn-success btn-lg" rel="publisher">
+            	<i class="fa fa-check fa-2x" style="color:black"></i>
+        	</button>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+
+    </form>
+
+
+    {% else %}
+	<html>
+  <style>
+    section {
+        top: 50%;
+        margin-right: -50%;
+        left: 50%;
+        color: black;
+        position: absolute;
+        transform: translate(-50%, -50%) }
+        
+  </style>
+  <section>
+    <h2 style="font-family:verdana;"> You have searched everyone currently. Try chatting with one of your matches!</h2>
+    <center>
+        <a style="color: black;text-align: center"  href="{% url 'user:matches' %}" color: green>
+            <td><i class="fa fa-home"></i> Matches</td>
+        </a>
+    </center>
+  </section>
+       
+				
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+ <!--***************************************************************************************
+*  REFERENCES
+
+*  Title: Profile Card
+*  Author: codename065
+*  Date: 4/6/2021
+*  URL: https://bootsnipp.com/snippets/xpyz9
+*  Software License: MIT license 
+***************************************************************************************-->
+

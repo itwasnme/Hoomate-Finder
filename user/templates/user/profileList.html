@@ -1,0 +1,13 @@
+<div class="mx-auto" style="width: 400px;">
+    <h1>All Profiles</h1>
+    {% if latest_profile_list %}
+        <p>
+            {% for profile in latest_profile_list %}
+            <li><a href="{% url 'user:details' profile.id %}">{{ profile.name_text }}</a></li>
+            {% endfor %}
+        </p>
+    {% else %}
+    <p>No profiles are available.</p>
+    {% endif %}
+</div>
+<a href="{% url 'user:main' %}">Go Back to Main Page</a>

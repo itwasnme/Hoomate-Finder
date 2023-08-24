@@ -1,0 +1,28 @@
+<!-- This is meant for testing the image file-->
+
+<div class="col-md-12 border-bottom">
+
+
+  <form action="{% url 'user:clearfilter'  %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-secondary btn-sm">Clear Filters</button>
+  
+  
+  <p style = "font-family:cursive;font-size:14px;font-style:italic;">
+       
+    </p>
+  
+  </div>
+
+</form>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+     {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+  
+  {% if prof %}
+    <img src="{{ prof.profile_image.url}}" alt="connect" style="max-height:300px">
+  {% endif %}
+

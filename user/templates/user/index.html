@@ -1,0 +1,61 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Welcome </title>
+		<link rel="icon" type="image/x-icon" href="{% static 'user/assets/img/portfolio/uvalogo.jpg' %}" />  
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+		<link rel="stylesheet" href="{% static 'user/css/styles2.css' %}">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body style="overflow-y: hidden">
+		<div class="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="header-left">
+							<img src="{% static 'user/assets/img/portfolio/uvalogo2.png' %}" class="logo" alt="Logo">
+						</div>
+						<div class="top-title">		
+							<h1 class="animated infinite bounceInDown"> Welcome, {{user.username}}! </h1>
+							<h6 class="logo-title animated pulse">Good luck on your Hoommate Search :) </h6>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="menu">
+							{% if user.is_authenticated %}
+
+							{% if profile %}
+							<li class="f-item-1"><a href="{% url 'user:search' %}">Hoommate Search Hunt</a></li>
+							<li class="f-item-2"><a href="{% url 'user:matches' %}">Your Matches</a></li>
+							<li class="f-item-2"><a href="{% url 'user:inbox' %}">Your Inbox</a></li>
+							<li class="f-item-3"><a href="{% url 'user:newprofile' %}">Update Your Profile</a></li>
+							<li class="f-item-4"><a href="{% url 'user:logout' %}">Log Out</a></li>
+							{% else %}
+							<li class="f-item-1"><a href="{% url 'user:newprofile' %}">Create your profile</a></li>
+							{% endif %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+ <!-- Commenting out this footer for now, just because I wanted to remove the scrollable white space <footer></footer> -Nathan -->
+</html>
+
+
+ <!--***************************************************************************************
+*  REFERENCES
+
+*  Title: Cool Navigation Bar
+*  Author: devfahim 
+*  Date: 4/16/2021
+*  URL: https://bootsnipp.com/snippets/O5q6l
+*  Software License: MIT license 
+***************************************************************************************-->

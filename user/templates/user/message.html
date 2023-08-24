@@ -1,0 +1,593 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <title style="text-transform:capitalize">Messenger</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'user/assets/img/portfolio/uvalogo.jpg' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css">
+	
+	<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+
+    <style type="text/css">
+
+    body{
+    background-color: #ffc130;
+    margin-top:8px;
+}
+.card {
+    background: #fff;
+    transition: .5s;
+    border: 0;
+    margin-bottom: 20px;
+    border-radius: .55rem;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+.chat-app .people-list {
+    width: 290px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 8px;
+    z-index: 7
+}
+
+.chat-app .chat {
+    margin-left: 400px;
+    border-left: 1px solid #eaeaea
+}
+
+.people-list {
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s
+}
+
+.people-list .chat-list li {
+    padding: 10px 15px;
+    list-style: none;
+    border-radius: 3px
+}
+
+.people-list .chat-list li:hover {
+    background: #efefef;
+    cursor: pointer
+}
+
+.people-list .chat-list li.active {
+    background: #efefef
+}
+
+.people-list .chat-list li .name {
+    font-size: 15px
+}
+
+.people-list .chat-list img {
+    width: 45px;
+    border-radius: 50%
+}
+
+.people-list img {
+    float: left;
+    border-radius: 50%
+}
+
+.people-list .about {
+    float: left;
+    padding-left: 8px
+}
+
+.people-list .status {
+    color: #999;
+    font-size: 13px
+}
+
+.chat .chat-header {
+    padding: 15px 20px;
+    border-top: 2px solid #f4f7f6
+}
+
+.chat .chat-header img {
+    float: left;
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-header .chat-about {
+    float: left;
+    padding-left: 10px
+}
+
+.chat .chat-history {
+    padding: 20px;
+    border-bottom: 2px solid #fff;
+     }
+
+.chat .chat-history ul {
+    padding: 0
+}
+
+.chat .chat-history ul li {
+    list-style: none;
+    margin-bottom: 30px
+}
+
+.chat .chat-history ul li:last-child {
+    margin-bottom: 0px
+}
+
+.chat .chat-history .message-data {
+    margin-bottom: 15px
+}
+
+.chat .chat-history .message-data img {
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-history .message-data-time {
+    color: #434651;
+    padding-left: 6px
+}
+
+.chat .chat-history .message {
+    color: #444;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    display: inline-block;
+    position: relative
+}
+
+.chat .chat-history .message:after {
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .my-message {
+    background: #efefef;
+}
+
+.chat .chat-history .my-message:after {
+    bottom: 100%;
+    left: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #efefef;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .other-message {
+    background: #e8f1f3;
+    text-align: right
+}
+
+.chat .chat-history .other-message:after {
+    border-bottom-color: #e8f1f3;
+    left: 93%
+}
+
+.chat .chat-message {
+    padding: 20px
+}
+
+.online,
+.offline,
+.me {
+    margin-right: 2px;
+    font-size: 8px;
+    vertical-align: middle
+}
+
+.online {
+    color: #86c541
+}
+
+.offline {
+    color: #e47297
+}
+
+.me {
+    color: #1d8ecd
+}
+
+.float-right {
+    float: right
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+}
+
+@media only screen and (max-width: 767px) {
+    .chat-app .people-list {
+        height: 465px;
+        width: 100%;
+        overflow-x: auto;
+        background: #fff;
+        left: -400px;
+        display: none
+    }
+    .chat-app .people-list.open {
+        left: 0
+    }
+    .chat-app .chat {
+        margin: 0
+    }
+    .chat-app .chat .chat-header {
+        border-radius: 0.55rem 0.55rem 0 0
+    }
+    .chat-app .chat-history {
+        height: 300px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .chat-app .chat-list {
+        height: 650px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: 600px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+    .chat-app .chat-list {
+        height: 480px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: calc(100vh - 350px);
+        overflow-x: auto
+    }
+}
+    </style>
+</head>
+
+
+
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+<div class="container">
+
+<a style="color: black" class="link" href="{% url 'user:inbox' %}">
+<td><i class="fa fa-inbox"></i> Inbox</td>
+</a>
+
+<div class="row clearfix">
+    <div class="col-lg-12">	
+        <div class="card chat-app">
+            <div id="plist" class="people-list">
+
+	<form id="addressBox"  action="{% url 'user:updatemapboxaddress' message.id %}" method="post">
+   	 {% csrf_token %}
+
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+	 <input type="submit" class="input-group-text" value="Share!" >
+	</div>
+   	 <input type="text" name="location" class="form-control" maxlength="100" placeholder="Found a nice place?"><br>
+	</form>
+	</div>   
+
+	<div style="line-height:60%;">
+    	<br>
+	</div>
+
+
+<div id='map' style='width: 385px; height: 260px;'></div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZG9kb2xlZTEyIiwiYSI6ImNrbnc5cDY4YzBiNm0ycW84ajVtNm4xZ3AifQ.aITGJA1vwgfG1VskyCUqFA';
+  
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/mapbox/streets-v10',
+    center: [-78.50396367775467,38.034420744863326],
+    zoom: 15,
+    doubleClickZoom: false,
+  });
+
+  
+  if("{{ message.mapboxLocation }}"){
+      var location1 = "{{ message.mapboxLocation }}";
+      var locationarray = location1.split(" ");
+      var search = "";
+      locationarray.forEach(element => {
+          search += element + "%20";
+      });
+      search = search.substring(0,search.length - 3);
+      var oldcenter = [-78.50396367775467,38.034420744863326];
+    var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" +  search + ".json?autocomplete=true&country=US&limit=1&proximity=" + oldcenter[0] + "," + oldcenter[1] + "&access_token=" + mapboxgl.accessToken;
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",url,false);
+    Httpreq.send(null);
+    var data = JSON.parse(Httpreq.responseText);
+    if(data.features[0].center){
+            center = data.features[0].center;
+        var msg_id = data.features[0].place_name;
+        map.flyTo({
+            center: center
+        });
+        new mapboxgl.Marker()
+                .setLngLat(center)
+                .addTo(map);
+        new mapboxgl.Popup()
+            .setLngLat(center)
+            .setHTML("You or {{otherprofile.name_text}} suggested this location: \n" + data.features[0].place_name)
+            .addTo(map);
+    
+        
+    }
+    
+   }
+
+
+
+//   // When a click event occurs on a feature in the places layer, open a popup at the
+// // location of the feature, with description HTML from its properties.
+ map.on('click', function (e) {
+    var coordinates = e.lngLat;
+    var lng = coordinates.toArray()[1];
+    var lat = coordinates.toArray()[0];
+    var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + lat + "," + lng + ".json?limit=1&access_token=" + mapboxgl.accessToken;
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",url,false);
+    Httpreq.send(null);
+    var data = JSON.parse(Httpreq.responseText);
+    new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(data.features[0].place_name)
+            .addTo(map);
+    });
+    
+    // Add the control to the map.
+    map.addControl(
+    new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        zoom: 6,
+        placeholder: 'Address or Coordinates',
+        mapboxgl: mapboxgl
+    })
+    );
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+
+
+
+</script>
+ 	</div>
+
+
+
+            <div class="chat">
+
+                <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-lg-12">
+        {% if message.sender != user.username %}
+		<form action="{% url 'user:replymessage' message.sender message.id %}" method="post">
+    		{% csrf_token %}
+
+
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <input type="submit" class="input-group-text" value="Send">
+                        </div>
+		<input type="text" id="message" class="form-control" maxlength="500" name="message" placeholder="Send Message" required>  
+	    </form>
+        {% else %}
+        <form action="{% url 'user:replymessage' message.receiver message.id %}" method="post">
+        {% csrf_token %}
+
+
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <input type="submit" class="input-group-text" value="Send">
+                        </div>
+		<input type="text" id="message" class="form-control" maxlength="500" name="message" placeholder="Send Message" required>  
+	    </form>
+		{% endif %}
+
+	</div>                             
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="chat-history">
+                    <ul class="m-b-0">
+
+        {% if message.sender != user.username %}
+
+                        <li class="clearfix">
+                            <div class="message-data">
+                                {% if otherprofile.profile_image %}
+                                <img src="{{ otherprofile.profile_image.url }}" alt="avatar">
+                                {% else %}    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}
+                                <span class="message-data-time">{{ message.date }}, {{ message.time }}</span>
+                            </div>
+
+                            <div class="message my-message" style="max-width:680px">{{ message.message }}</div>     
+                             
+                        </li>   
+
+		{% else %}
+
+                        <li class="clearfix">
+                            <div class="message-data text-right">
+                                <span class="message-data-time">{{ message.date }} | {{ message.time }}</span>
+                                {% if currentprofile.profile_image %}
+                                <img src="{{ currentprofile.profile_image.url }}" alt="avatar">
+                                {% else %}                    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}
+                            </div>
+                            <div class="message other-message float-right" style="max-width:680px"> {{ message.message }} </div>
+                        </li>
+		{% endif %}
+
+
+
+
+		    {% for messageID, previousMessage in previous.items %}
+	  		{% if previousMessage.sender != user.username %}
+
+                        <li class="clearfix">
+                            <div class="message-data">
+                                {% if otherprofile.profile_image %}
+                                <img src="{{ otherprofile.profile_image.url }}" alt="avatar">
+                                {% else %}    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}
+                                <span class="message-data-time">{{ previousMessage.date }} | {{ previousMessage.time }}</span>
+                            </div>
+                            <div class="message my-message" style="max-width:680px">{{ previousMessage.message }}</div>                                    
+                        </li>      
+
+			{% else %}
+
+                        <li class="clearfix">
+                            <div class="message-data text-right">
+		
+                                <span class="message-data-time">{{ previousMessage.date }} | {{ previousMessage.time }}</span>
+                                {% if currentprofile.profile_image %}
+                                <img src="{{ currentprofile.profile_image.url }}" alt="avatar">
+                                {% else %}                    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}                       </div>
+                            <div class="message other-message float-right" style="max-width:680px"> {{ previousMessage.message }} </div>
+                        </li>
+
+                         		{% endif %}
+		{% endfor %}
+
+		
+
+                </div>
+
+            </div>
+            {% if message.sender != user.username %}
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                {% if otherprofile.profile_image %}
+                                <img src="{{ otherprofile.profile_image.url }}" alt="avatar">
+                                {% else %}                    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}                              </a>
+                            <div class="chat-about">
+                                <h6 class="m-b-0" style="text-transform: capitalize">{{ message.sender }}</h6>
+                                <small style="text-transform: capitalize">Subject: {{ message.subject }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                {% if otherprofile.profile_image %}
+                                <img src="{{ otherprofile.profile_image.url }}" alt="avatar">
+                                {% else %}                    
+                                <img src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" alt="avatar">
+                                {% endif %}                              </a>
+                            <div class="chat-about">
+                                <h6 class="m-b-0" style="text-transform: capitalize">{{ message.receiver }}</h6>
+                                <small style="text-transform: capitalize">Subject: {{ message.subject }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>
+ <!--***************************************************************************************
+*  REFERENCES
+
+*  Title: Mapbox Geocoding
+*  Author: Mapbox
+*  Date: 4/26/2021
+*  URL: https://docs.mapbox.com/api/search/geocoding/
+*  Software License: Mapbox license 
+***************************************************************************************-->
+
+
+ <!--***************************************************************************************
+*  REFERENCES
+
+*  Title: Bootstrap snippet. chat app
+*  Author: Dey Dey
+*  Date: 4/28/2021
+*  URL: https://www.bootdey.com/snippets/view/chat-app
+*  Software License: MIT license 
+***************************************************************************************-->

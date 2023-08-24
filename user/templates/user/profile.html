@@ -1,0 +1,435 @@
+  {% load static %} 
+  {% if user.is_authenticated %}
+
+<!doctype html>
+                        <html>
+                            <head>
+                                <meta charset='utf-8'>
+                                <meta name='viewport' content='width=device-width, initial-scale=1'>
+                                <title>Update Profile</title>
+		<link rel="icon" type="image/x-icon" href="{% static 'user/assets/img/portfolio/uvalogo.jpg' %}" />
+                                <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+                                <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+                                <style>body {
+    background: #FFA600
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #fd7e14
+}
+.breakplz {
+  padding: 10px;
+  width: 300px;
+  margin: 0 auto;
+}
+.breakall {
+  word-break: break-word;
+}
+.profile-button {
+    background: #3b26ff;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #e89700
+}
+.profile-button:focus {
+    background: #fd7e14;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #fd7e14;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+
+	.heart {color:blue; display:block; text-align: left;}
+}</style>
+                                <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+                                <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+                                <script type='text/javascript'></script>
+                            </head>
+                            <body oncontextmenu='return false' class='snippet-body'>
+                            <div class="container rounded bg-white mt-5">
+    <div class="row">
+        <div class="col-md-4 border-right">
+
+				<a style="color: gray" class="link" href="{% url 'user:main' %}" color: green>
+                                               		 <td><i class="fa fa-home"></i> Home</td>
+                                         		 </a>
+
+            <div class="d-flex flex-column align-items-center text-center p-3 py-6">
+				
+				{% if profile.profile_image %}
+					<img class = "profile_image" style="width:215px; height:215px;border-radius:100px;" src = "{{ profile.profile_image.url }}">
+				{% else %}
+				<img class="rounded-circle mt-7" src="{% static 'user/assets/img/portfolio/profilesample.jpg' %}" width="160">
+				{% endif %}
+	<p </p>	
+		<div class="column left" style="word-wrap: break-all;">
+		{% if profile.name_text %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;text-transform:capitalize;overflow:hidden;word-wrap: break-all;" class="breakall breakplz">
+				Name: {{ profile.name_text }}
+			</p>
+		{% endif %}
+
+		{% if profile.age %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Age: {{ profile.age}}
+			</p>
+		{% endif %}
+
+
+		{% if profile.grad_year %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Graduation Year: {{profile.grad_year}}
+			</p>
+		{% endif %}
+
+		{% if profile.budget_lower and profile.budget_upper %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Budget Range: ${{ profile.budget_lower}} - ${{ profile.budget_upper}}
+			</p>
+		{% elif profile.budget_lower %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Budget Minimum: ${{ profile.budget_lower}}
+			</p>
+		{% elif profile.budget_upper %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Budget Maximum: ${{ profile.budget_upper}}
+			</p>
+		{% endif %}
+
+		{% if profile.noise_level %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Noise Level (out of 10): {{profile.noise_level}}
+			</p>
+		{% endif %}
+
+		{% if profile.get_gender_display %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Gender Identity: {{profile.get_gender_display}}
+			</p>
+		{% endif %}
+
+		{% if profile.get_personality_display %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Personality: {{profile.get_personality_display}}
+			</p>
+		{% endif %}
+
+		{% if profile.get_car_display %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;">
+				Car Status: {{profile.get_car_display}}
+			</p>
+		{% endif %}
+
+		<div class="col-md-12" style="max-width:300px;">
+		{% if profile.location %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;word-wrap:break-all;">
+				Location Preferences: {{profile.location}}
+			</p>
+		{% endif %}
+		</div>
+
+		<div class="col-md-12 border-bottom" style="max-width:300px;">
+
+		{% if profile.bio_text %}
+		<p style = "font-family:cursive;font-size:15px;font-style:italic;overflow:hidden;word-wrap:break-word;">
+				Bio: {{profile.bio_text}}
+			</p>
+		{% endif %}
+		</div>
+	</div>
+
+
+	<p style = "font-family:monospace;font-size:17px;font-style:italic; font-weight:bold;">
+         	Your Current Match Filters
+      	</p>
+	
+	{% if profile.agemin and profile.agemax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Age Between: {{profile.agemin}} - {{profile.agemax}}
+      	</p>
+	{% elif profile.agemin %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Age Above: {{profile.agemin}}
+      	</p>
+	{% elif profile.agemax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Age Below: {{profile.agemax}}
+      	</p>
+    {% endif %}
+
+	{% if profile.grad_yearmin and profile.grad_yearmax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Graduate Between: {{profile.grad_yearmin}} - {{profile.grad_yearmax}}
+      	</p>
+	{% elif profile.grad_yearmin %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Graduate After: {{profile.grad_yearmin}}
+      	</p>
+	{% elif profile.grad_yearmax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Graduate Before: {{profile.grad_yearmax}}
+      	</p>
+    	{% else %}
+    	{% endif %}
+
+	{% if profile.budget_lowerfilter and profile.budget_upperfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Monthly Budget Within: ${{profile.budget_lowerfilter}} - ${{profile.budget_upperfilter}}
+      	</p>
+	{% elif profile.budget_lowerfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Monthly Budget Minimum: ${{profile.budget_lowerfilter}}
+      	</p>
+	{% elif profile.budget_upperfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Monthly Budget Maximum: ${{profile.budget_lowerfilter}}
+      	</p>
+	{% else %}
+    	{% endif %}
+
+	{% if profile.noise_levelmin and profile.noise_levelmax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Noise Level Between: {{profile.noise_levelmin}} - {{profile.noise_levelmax}}
+      	</p>
+	{% elif profile.noise_levelmin %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Noise Level Above: {{profile.noise_levelmin}}
+      	</p>
+	{% elif profile.noise_levelmax %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Noise Level Below: {{profile.noise_levelmax}}
+      	</p>
+	{% else %}
+   	{% endif %}
+	
+	{% if profile.genderfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Preferred Gender: {{profile.genderfilter}}
+      	</p>
+	{% endif %}
+	{% if profile.personalityfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Preferred Personality: {{profile.personalityfilter}}
+      	</p>
+	{% endif %}
+    	{% if profile.carfilter %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	Car: {{profile.carfilter}}
+      	</p>
+	{% endif %}
+
+    	{% if profile.agemin or profile.agemax or profile.grad_yearmin or profile.grad_yearmax or profile.budget_lowerfilter or profile.budget_upperfilter or profile.noise_levelmin or profile.noise_levelmax or profile.genderfilter or profile.personalityfilter or profile.carfilter %}
+    	{% else %}
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	You have not selected any filters!
+      	</p>
+   	{% endif %}
+
+	<div class="col-md-12 border-bottom">
+
+    	</form>
+    	<form action="{% url 'user:clearfilter'  %}" method="post">
+        	{% csrf_token %}
+       	 <button type="submit" class="btn btn-outline-secondary btn-sm">Clear Filters</button>
+    	</form>
+
+	<p style = "font-family:cursive;font-size:14px;font-style:italic;">
+         	
+      	</p>
+
+	</div>
+
+   	
+		<p style = "font-family:monospace;font-size:17px;font-weight:bold;">
+         		You Have Matched With
+      		</p>
+    	{% if matches %}
+        		{% for match in matches %}
+            		<a style = "color: light-blue;font-family:system-ui;font-size:15px;font-style:oblique;text-transform:capitalize;" href= "{% url 'user:details' match.id %}"> {{match.name_text}} </a>
+           	 	</br>
+        		{% endfor %}
+    	{% else %}
+		<p style = "font-family:monospace;font-size:13px;font-style:italic;">
+         		You have not matched with anyone yet 
+      		</p>
+    {% endif %}
+
+</div>
+        </div>
+        <div class="col-md-8">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h6 class="text-center">Update Your Profile</h6>
+    		<form action="{% url 'user:newprofileform'  %}" method="post" enctype="multipart/form-data">
+        		{% csrf_token %}
+                </div>
+                <div class="row mt-2">
+                    {% if profile %}
+                    <div class="col-md-6"><input id="name_text" class="form-control" type="text" name="name_text" maxlength="40" placeholder="Your name here..." ></div>
+                    {% else %}
+                    <div class="col-md-6"><input id="name_text" class="form-control" type="text" name="name_text" maxlength="40" placeholder="Your name here..."  required></div>
+       	    {% endif %}
+	    <div class="col-md-6"><input id="bio_text" class="form-control" type="text" name="bio_text" maxlength="500" placeholder="Tell us about yourself" ></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><input id="age" class="form-control" type="number" name="age" min="18" max="100" placeholder="Age" ></div>
+                    <div class="col-md-6"><input id="grad_year" class="form-control" type="number" name="grad_year" min="2021" max="2030" placeholder="Graduation Year" ></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><input id="budget_lower" class="form-control" type="number" name="budget_lower" min="0"  max="99999" placeholder="Monthly rental budget lower bound" ></div>
+                    <div class="col-md-6"><input id="budget_upper" class="form-control" type="number" name="budget_upper" min="0" max="99999" placeholder="Monthly rental budget upper bound" ></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><input id="noise_level" class="form-control" type="number" name="noise_level" min="1" max="10" placeholder="Noise level (1-10, 10 is highest)" ></div>
+	    <div class="col-md-6"><input id="location" class="form-control" type="text" name="location" maxlength="40" placeholder="Preferred Location (i.e JPA, The Corner, etc.)" ></div>
+                </div>
+                <br><div class="row mt-3"> 
+	    <br><label for="car" style="font-family:system-ui;font-size:17px;">Do you have a car? </label>
+	</div>
+	<div class="col-md-5">   
+                         {% for choice in cchoice %}
+           	    <input type="radio" style="width:100px;height:20px;" id="{{choice.1}}" name="car" value="{{ choice.1 }}">{{choice.1}}
+             	         {% endfor %}
+                </div>
+                <div class="row mt-3">   
+	    <br><label for="personality" style="font-family:system-ui;font-size:17px;">What personality would you prefer in a roommate? </label>
+	</div>
+	<div class="col-md-5">   
+            {% for choice in pchoice %}
+            <input type="radio"  style="width:100px;height:20px;" id="{{choice.1}}" name="personality" value="{{ choice.1 }}">{{choice.1}}
+             {% endfor %}
+                </div>
+                <div class="row mt-3">   
+	    <label for="gender" style="font-family:system-ui;font-size:17px;">Gender? </label>
+	</div>
+	<div class="col-md-4">   
+            {% for choice in gchoice %}
+            <input type="radio" style="width:100px;height:20px;" id="{{choice.1}}" name="gender" value="{{ choice.1 }}">{{choice.1}}
+             {% endfor %}
+	</div>
+                <br><div class="row mt-3">   
+	    <br><label for="gender" style="font-family:system-ui;font-size:17px;">Choose Profile Picture</label>
+	</div>
+
+	<div> 
+		<!-- Should only accept an image file-->
+		<input type="file" size="10" style="color:gray" id="profile_image" name="profile_image" accept = "image/*">
+
+	</div>
+
+	</div>
+
+
+                <div class="mt-5 text-right"><button type="submit" class="btn btn-primary profile-button">Update Profile</button></div>	
+
+
+<div class="form-group">
+            <h5>Filter by: </h5>
+            <label for="agemin" style="font-family:system-ui;font-size:17px;">Minimum Age: </label>
+            <input id="agemin" type="number" class="form-control" min="18" max="100" name="agemin"
+                placeholder=18>
+            <label for="agemax" style="font-family:system-ui;font-size:17px;">Maximum Age: </label>
+            <input id="agemax" type="number" class="form-control" min="18" max="100" name="agemax"
+                placeholder=23>
+            <label for="grad_yearmin" style="font-family:system-ui;font-size:17px;">Graduate After: </label>
+            <input id="grad_yearmin" type="number" class="form-control" min="2021" max="2030" name="grad_yearmin"
+                placeholder=2021>    
+            <label for="grad_yearmax" style="font-family:system-ui;font-size:17px;">Graduate Before: </label>
+            <input id="grad_yearmax" type="number" class="form-control" min="2021" max="2030" name="grad_yearmax"
+                placeholder=2021> 
+            <label for="budget_lowerfilter" style="font-family:system-ui;font-size:17px;">Monthly rental budget minimum: </label>
+            <input id="budget_lowerfilter" type="number" class="form-control" min="0" name="budget_lowerfilter"
+                placeholder=0>
+            <label for="budget_upperfilter" style="font-family:system-ui;font-size:17px;">Monthly rental budget maximum: </label>
+            <input id="budget_upperfilter" type="number" class="form-control" min=0 max="99999" name="budget_upperfilter"
+                placeholder=700>
+            <label for="noise_levelmin" style="font-family:system-ui;font-size:17px;">Noise level minimum </label>
+            <input id="noise_levelmin" type="number" class="form-control" min="1" max="10" name="noise_levelmin"
+                placeholder=5>
+            <label for="noise_levelmax" style="font-family:system-ui;font-size:17px;">Noise level maximum </label>
+            <input id="noise_levelmax" type="number" class="form-control" min="1" max="10" name="noise_levelmax"
+                placeholder=5>
+            <br/>
+
+	  
+            <label for="genderfilter" style="font-family:system-ui;font-size:17px;">Preferred Gender: </label>
+	
+	<div class="col-md-4">   
+
+
+            {% for choice in gchoice %}
+            <input type="radio" style="width:100px;height:20px;" id="{{choice.1}}" name="genderfilter" value="{{ choice.1 }}">{{choice.1}}
+             {% endfor %}
+            <br/>
+        </div>
+	  
+            <br><label for="personalityfilter" style="font-family:system-ui;font-size:17px;">Preferred Personality? </label>
+	
+        <div class="col-md-4">
+            {% for choice in pchoice %}
+            <input type="radio" style="width:100px;height:20px;" id="{{choice.1}}" name="personalityfilter" value="{{ choice.1 }}">{{choice.1}}
+             {% endfor %}
+            <br/>
+        </div>
+	  
+            <br><label for="carfilter" style="font-family:system-ui;font-size:17px;">Does your roommate need to have a car? </label>
+	
+        <div class="col-md-5">
+            {% for choice in cchoice %}
+            <input type="radio" style="width:100px;height:20px;" id="{{choice.1}}" name="carfilter" value="{{ choice.1 }}">{{choice.1}}
+             {% endfor %}
+        </div>
+        </div>
+
+       <div class="mt-5 text-right">
+        <button type="submit" class="btn btn-primary profile-button">Set Filters</button>	
+        </div>
+    </form>
+
+	
+
+</div>
+{% endif %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+ <!--***************************************************************************************
+*  REFERENCES
+
+*  Title: Bootstrap 4 Edit profile form
+*  Author: BBBootstrap Team
+*  Date: 4/1/2021
+*  URL: https://bbbootstrap.com/snippets/bootstrap-edit-profile-form-84177583
+*  Software License: MIT license 
+***************************************************************************************-->
+
+<!--***************************************************************************************
+*  REFERENCES
+*  Title: crash-course-CRM
+*  Author: Dennis Ivy
+*  Date: 05/02/2021
+*  Code version: v17
+*  URL: https://github.com/divanov11/crash-course-CRM/blob/part-17-Image-Upload/crm1_v17_image_upload/crm1/settings.py
+*  Software License: <license software is released under>
+*
+***************************************************************************************-->
