@@ -1,0 +1,15 @@
+language: python
+python:
+- '3.8'
+install:
+- pip install -r requirements-travis.txt
+script:
+- python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: DQNHXSikyUxDQ/zTHQdjzRORAcQfBEnsy0WhnTM943OC7+hJgfvPCucUz8cWGK+GnsVqW6WbILhRIfPDoXTnt7vWaH6WxSbae5Z8As2PT/aKKckJcbOElP2cOJNKywJvbss3tK/aADJRJPR3sx2kD1ezUUIr9nV0xAw/M9vIQoFAySiR5Ml/JGGvK1AGaqk1NSrfS9IB5/P1GhQ3UBS3aqskwdVu49JG5yCPLLYL0HJkpqkHolob1s2rv4gk1aCFBXbBdqckV0///uNIgaBZZOWLodK6ucgFNJojiJBw5HwUTMcPO3zz9DHLfLaL2U3MXNkh25IEDxCR9r27ryKQUwHAXRWvzJnFUWmMIiKIcphZMmwMeMnoNz/MRY4YfGN4W/6AokPtdYC1iA4aeKycU9wJQNKD/KEtEp1MnQxDFsMDKpAfA96jUb2IH3V11ku8gld7ItbU4ekQ5JXalhMzr0yJ5bm0ZMnFkNvND3PnjhUxWAUuuLDXns/etMr0R4BhimPDeOPAfrI8tOA3pxVlvKBOqzjyJhvUcK6e9PjT7axddLQHEp7P7g4xckUjZ/9TH2NMZm6tv/YUdymHiAzXR7lKqBBgipPEfTYEzLUI6Vpzy0FeKAG0pIH7woVmJdJUKxdDkJZ9S2XecQ2td++g652GhOkcKR/rfygY8lTPEak=
+  app: roommate-finder-a-21
+  on:
+    repo: uva-cs3240-s21/project-a-21
+    branch: main

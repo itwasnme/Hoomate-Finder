@@ -1,0 +1,6 @@
+gunicorn
+django-allauth
+psycopg2
+pillow
+django-storages
+boto3
