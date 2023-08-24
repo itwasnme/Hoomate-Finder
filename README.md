@@ -1,5 +1,5 @@
 
-# project-a-21: Hoommate Finder
+Hoommate Finder
 
 The Hoommate finder is a roommate finding service that seeks to turn Hoos into Roommates. Users are greeted with a home page that explains the concept of swiping and then will sign into the app via google account API integration. 
 
